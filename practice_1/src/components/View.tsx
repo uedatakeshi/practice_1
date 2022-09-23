@@ -3,7 +3,6 @@ import React from 'react'
 const View = () => {
     return (
         <div>
-            <div><button className='btn btn-success mb-2'>編集する</button></div>
             <div className='mb-3'>
                 <label className='form-label'>天気</label>
                 <p className='h3 bg-light p-3'>晴れ</p>

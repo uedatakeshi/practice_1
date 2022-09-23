@@ -1,13 +1,14 @@
 import React from 'react'
 
-const Form = () => {
+const Form = (props: any) => {
+      
   return (
     <div>
         <div className="mb-3">
             <label className="form-label" htmlFor='weather'>天気</label>
             <div className="row">
                 <div className="col-auto">
-                    <select className="form-control form-select-lg" id="weather" name="weather">
+                    <select className="form-control form-select-lg" id="weather" name="weather" >
                         <option>晴れ</option>
                         <option>曇り</option>
                         <option>雨</option>
@@ -55,12 +56,12 @@ const Form = () => {
         </div>
         <div className="row">
             <div className="col-auto">
-                <button type="button" className="btn btn-primary">登録する</button>
+              <button type="button" onClick={props.handleAddDiary} className="btn btn-primary">登録する</button>
             </div>
             <div className="col-auto">
-                <button type="button" className="btn  btn-outline-secondary">削除する</button>
+              <button type="button" onClick={props.onStop} className="btn  btn-outline-secondary">削除する</button>
             </div>
-        </div>
+          </div>
 
 
     </div>
