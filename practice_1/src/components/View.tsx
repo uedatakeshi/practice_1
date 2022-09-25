@@ -1,6 +1,6 @@
 import React from 'react'
 
-const View = () => {
+const View = ({diaries}: any) => {
     return (
         <div>
             <div className='mb-3'>
@@ -13,7 +13,7 @@ const View = () => {
             </div>
             <div className="mb-3">
                 <label className="form-label">睡眠時間</label>
-                <p className="h3 bg-light p-3">8時間</p>
+                <p className="h3 bg-light p-3">{diaries.sleep_time}時間</p>
             </div>
             <div className="mb-3">
                 <label className="form-label">出社時間</label>
@@ -21,7 +21,7 @@ const View = () => {
             </div>
             <div className="mb-3">
                 <label className="form-label">コメント</label>
-                <p className="h3 bg-light p-3">はじめまして。</p>
+                <p className="h3 bg-light p-3">{diaries.comment}</p>
             </div>
 
         </div>

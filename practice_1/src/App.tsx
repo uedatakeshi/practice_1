@@ -3,18 +3,16 @@ import View from './components/View';
 import Form from './components/Form';
 import { useState, useRef } from 'react';
 
-function App(props: any) {
+function App() {
   const [isEdit, setIsEdit] = useState(false);
   const [diaries, setDiaries] = useState({
     weather:"", 
     manager:"", 
-    sleep_time:"", 
+    sleep_time:"8", 
     start:"", 
     end:"", 
-    comment:""
+    comment:"はじめまして。"
   });
-  //const diaryWeatherRef = useRef();
-  //const diaryManagerRef = useRef();
 
   const editHandler = () => {
     setIsEdit(true);
@@ -23,6 +21,7 @@ function App(props: any) {
     setIsEdit(false);
   }
   const handleAddDiary = () => {
+    //console.log(diaryWeatherRef.current.value);
     //const weather = diaryWeatherRef.current.value;
     //const manager = diaryManagerRef.current.value;
   }
@@ -35,7 +34,7 @@ function App(props: any) {
       {isEdit ?
         <div>
           <div><button onClick={viewHandler} className='btn btn-primary mb-2'>戻る</button></div>
-          <Form onStop={viewHandler} />
+          <Form diaries={diaries} setDiaries={setDiaries}  onStop={viewHandler} onAdd={handleAddDiary} />
 
         </div>
 
@@ -43,7 +42,7 @@ function App(props: any) {
 
         <div>
           <div><button onClick={editHandler} className='btn btn-success mb-2'>編集する</button></div>
-          <View />
+          <View diaries={diaries} />
         </div>
       }
 
