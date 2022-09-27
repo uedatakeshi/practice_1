@@ -4,15 +4,25 @@ import Form from './components/Form';
 import { useState, useRef } from 'react';
 
 function App() {
+
   const [isEdit, setIsEdit] = useState(false);
-  const [diaries, setDiaries] = useState({
-    weather:"", 
-    manager:"", 
-    sleep_time:"8", 
-    start:"", 
-    end:"", 
-    comment:"はじめまして。"
+  const [diaries, setDiaries] = useState<Diary>({
+    weather:"",
+    manager:"",
+    sleep_time:9,
+    start:"",
+    end:"",
+    comment:""
   });
+
+  type Diary = {
+    weather: string; 
+    manager: string;
+    sleep_time: number;
+    start: string;
+    end: string; 
+    comment: string;
+  }
 
   const editHandler = () => {
     setIsEdit(true);
@@ -25,7 +35,6 @@ function App() {
     //const weather = diaryWeatherRef.current.value;
     //const manager = diaryManagerRef.current.value;
   }
-
 
 
   return (

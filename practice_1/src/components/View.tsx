@@ -1,6 +1,8 @@
 import React from 'react'
 
-const View = ({diaries}: any) => {
+
+
+const View = ({diaries}:any) => {
     return (
         <div>
             <div className='mb-3'>
