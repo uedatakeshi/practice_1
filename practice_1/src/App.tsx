@@ -8,12 +8,12 @@ import { useState, useRef } from 'react';
 
   const [isEdit, setIsEdit] = useState(false);
   const [diaries, setDiaries] = useState<Diary>({
-    weather:"",
-    manager:"",
+    weather:"晴れ",
+    manager:"山田",
     sleep_time:9,
-    start:"",
-    end:"",
-    comment:""
+    start:"10:00",
+    end:"17:00",
+    comment:"はじめまして。"
   });
 
 
@@ -36,7 +36,7 @@ import { useState, useRef } from 'react';
       {isEdit ?
         <div>
           <div><button onClick={viewHandler} className='btn btn-primary mb-2'>戻る</button></div>
-          <Form diaries={diaries} setDiaries={setDiaries}  onStop={viewHandler} onAdd={handleAddDiary} />
+          <Form diaries={diaries} setDiaries={setDiaries}  onStop={viewHandler} />
 
         </div>
 

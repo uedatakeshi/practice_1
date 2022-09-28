@@ -1,21 +1,51 @@
-import React from 'react'
+import React from 'react';
+import { Diary } from '../Diary';
 import { useState, useRef } from 'react';
 
-const Form = (props: any) => {
+type diaryProps = {
+    diaries: Diary;
+    setDiaries: any;
+    onStop: any;
+}
 
-    const diarySleeptimeRef: any = useRef();
+const Form = (props: diaryProps) => {
 
+    const WeatherRef = useRef<HTMLSelectElement>(null);
+    const ManagerRef = useRef<HTMLSelectElement>(null);
+    const SleeptimeRef = useRef<HTMLInputElement>(null);
+    const StartRef = useRef<HTMLInputElement>(null);
+    const EndRef = useRef<HTMLInputElement>(null);
+    const CommentRef = useRef<HTMLTextAreaElement>(null);
+
+    /*
     const handleSleepTimeChange = (event: any) => {
         props.setDiaries({ sleep_time: event.target.value });
     }
+    */
 
     const handleAddDiary = () => {
         if (window.confirm("よろしいですか？")) {
-            props.setDiaries({ sleep_time: diarySleeptimeRef.current.value });
+            props.setDiaries({ 
+                weather: WeatherRef.current?.value,
+                manager: ManagerRef.current?.value,
+                sleep_time: SleeptimeRef.current?.value,
+                start: StartRef.current?.value,
+                end: EndRef.current?.value,
+                comment: CommentRef.current?.value,
+            });
             props.onStop();
-    
         }
     }
+    const weatherOptions = [
+        { value: '晴れ', label: '晴れ' },
+        { value: '曇り', label: '曇り' },
+        { value: '雨', label: '雨' },
+    ];
+    const managerOptions = [
+        { value: '山田', label: '山田' },
+        { value: '前田', label: '前田' },
+        { value: '高田', label: '高田' },
+    ];
 
     return (
         <div>
@@ -23,10 +53,8 @@ const Form = (props: any) => {
                 <label className="form-label" htmlFor='weather'>天気</label>
                 <div className="row">
                     <div className="col-auto">
-                        <select className="form-control form-select-lg" id="weather" name="weather" >
-                            <option>晴れ</option>
-                            <option>曇り</option>
-                            <option>雨</option>
+                        <select ref={WeatherRef} defaultValue={props.diaries.weather} className="form-control form-select-lg" id="weather" name="weather" >
+                            {weatherOptions.map(d => <option value={d.value}>{d.label}</option>)}
                         </select>
                     </div>
                 </div>
@@ -35,10 +63,8 @@ const Form = (props: any) => {
                 <label className="form-label" htmlFor="manager">担当者</label>
                 <div className="row">
                     <div className="col-auto">
-                        <select className="form-control form-select-lg" id="manager" name="manager">
-                            <option>山田</option>
-                            <option>前田</option>
-                            <option>高田</option>
+                        <select ref={ManagerRef} defaultValue={props.diaries.manager} className="form-control form-select-lg" id="manager" name="manager">
+                            {managerOptions.map(d => <option value={d.value}>{d.label}</option>)}
                         </select>
                     </div>
                 </div>
@@ -47,7 +73,9 @@ const Form = (props: any) => {
                 <label className="form-label" htmlFor="sleep_time">睡眠時間(h)</label>
                 <div className="row">
                     <div className="col-auto">
-                        <input type="number"  defaultValue={props.diaries.sleep_time} ref={diarySleeptimeRef} className="form-control" id="sleep_time" name="sleep_time" />
+                        <input type="number" defaultValue={props.diaries.sleep_time}
+                            ref={SleeptimeRef}
+                            className="form-control" id="sleep_time" name="sleep_time" />
                     </div>
                 </div>
             </div>
@@ -55,19 +83,23 @@ const Form = (props: any) => {
                 <label className="form-label" htmlFor="start">出社時間</label>
                 <div className="row">
                     <div className="col-auto">
-                        <input type="time" className="form-control" id="start" name="start" />
+                        <input type="time" defaultValue={props.diaries.start}
+                        ref={StartRef}
+                            className="form-control" id="start" name="start" />
                     </div>
                     <div className="col-auto">
                         ～
                     </div>
                     <div className="col-auto">
-                        <input type="time" className="form-control" id="end" name="end" />
+                        <input type="time" defaultValue={props.diaries.end}
+                            ref={EndRef}
+                            className="form-control" id="end" name="end" />
                     </div>
                 </div>
             </div>
             <div className="mb-3">
                 <label className="form-label" htmlFor="comment">コメント</label>
-                <textarea className="form-control" id="comment" name="comment" ></textarea>
+                <textarea ref={CommentRef} className="form-control" id="comment" name="comment" >{props.diaries.comment}</textarea>
             </div>
             <div className="row">
                 <div className="col-auto">
