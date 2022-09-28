@@ -1,9 +1,10 @@
 import React from 'react';
+import { Diary } from './Diary';
 import View from './components/View';
 import Form from './components/Form';
 import { useState, useRef } from 'react';
 
-function App() {
+  function App() {
 
   const [isEdit, setIsEdit] = useState(false);
   const [diaries, setDiaries] = useState<Diary>({
@@ -15,14 +16,6 @@ function App() {
     comment:""
   });
 
-  type Diary = {
-    weather: string; 
-    manager: string;
-    sleep_time: number;
-    start: string;
-    end: string; 
-    comment: string;
-  }
 
   const editHandler = () => {
     setIsEdit(true);

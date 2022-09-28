@@ -1,8 +1,13 @@
 import React from 'react'
+import { Diary } from '../Diary';
+
+type diaryProps = {
+    diaries: Diary;
+}
 
 
+const View  = ({diaries}: diaryProps) => {
 
-const View = ({diaries}:any) => {
     return (
         <div>
             <div className='mb-3'>
