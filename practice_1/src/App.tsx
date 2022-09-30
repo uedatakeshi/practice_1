@@ -2,7 +2,7 @@ import React from 'react';
 import { Diary } from './Diary';
 import View from './components/View';
 import Form from './components/Form';
-import { useState, useRef } from 'react';
+import { useState } from 'react';
 
   function App() {
 
@@ -22,6 +22,7 @@ import { useState, useRef } from 'react';
   const viewHandler = () => {
     setIsEdit(false);
   }
+
 
   return (
     <div className="App">

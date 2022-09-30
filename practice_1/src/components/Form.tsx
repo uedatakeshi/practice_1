@@ -1,31 +1,31 @@
-import React from 'react';
+import React,  { Dispatch, SetStateAction } from 'react';
 import { Diary } from '../Diary';
-import { useState, useRef } from 'react';
+import { useRef } from 'react';
 
 interface diaryProps {
     diaries: Diary,
-    setDiaries: any,
-    onStop: any
+    setDiaries: Dispatch<SetStateAction<Diary>>,
+    onStop: () => void,
 }
 
 const Form  = (props: diaryProps) => {
 
-    const WeatherRef = useRef<HTMLSelectElement>(null);
-    const ManagerRef = useRef<HTMLSelectElement>(null);
-    const SleeptimeRef = useRef<HTMLInputElement>(null);
-    const StartRef = useRef<HTMLInputElement>(null);
-    const EndRef = useRef<HTMLInputElement>(null);
-    const CommentRef = useRef<HTMLTextAreaElement>(null);
+    const WeatherRef = useRef<HTMLSelectElement>(document.createElement("select"));
+    const ManagerRef = useRef<HTMLSelectElement>(document.createElement("select"));
+    const SleeptimeRef = useRef<HTMLInputElement>(document.createElement("input"));
+    const StartRef = useRef<HTMLInputElement>(document.createElement("input"));
+    const EndRef = useRef<HTMLInputElement>(document.createElement("input"));
+    const CommentRef = useRef<HTMLTextAreaElement>(document.createElement("textarea"));
 
     const handleAddDiary = () => {
         if (window.confirm("よろしいですか？")) {
             props.setDiaries({ 
-                weather: WeatherRef.current?.value,
-                manager: ManagerRef.current?.value,
-                sleep_time: SleeptimeRef.current?.value,
-                start: StartRef.current?.value,
-                end: EndRef.current?.value,
-                comment: CommentRef.current?.value,
+                weather: WeatherRef.current.value,
+                manager: ManagerRef.current.value,
+                sleep_time: Number(SleeptimeRef.current.value),
+                start: StartRef.current.value,
+                end: EndRef.current.value,
+                comment: CommentRef.current.value,
             });
             props.onStop();
         }
