@@ -2,13 +2,13 @@ import React from 'react';
 import { Diary } from '../Diary';
 import { useState, useRef } from 'react';
 
-type diaryProps = {
-    diaries: Diary;
-    setDiaries: any;
-    onStop: any;
+interface diaryProps {
+    diaries: Diary,
+    setDiaries: any,
+    onStop: any
 }
 
-const Form = (props: diaryProps) => {
+const Form  = (props: diaryProps) => {
 
     const WeatherRef = useRef<HTMLSelectElement>(null);
     const ManagerRef = useRef<HTMLSelectElement>(null);
@@ -16,12 +16,6 @@ const Form = (props: diaryProps) => {
     const StartRef = useRef<HTMLInputElement>(null);
     const EndRef = useRef<HTMLInputElement>(null);
     const CommentRef = useRef<HTMLTextAreaElement>(null);
-
-    /*
-    const handleSleepTimeChange = (event: any) => {
-        props.setDiaries({ sleep_time: event.target.value });
-    }
-    */
 
     const handleAddDiary = () => {
         if (window.confirm("よろしいですか？")) {

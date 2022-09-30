@@ -16,19 +16,12 @@ import { useState, useRef } from 'react';
     comment:"はじめまして。"
   });
 
-
   const editHandler = () => {
     setIsEdit(true);
   }
   const viewHandler = () => {
     setIsEdit(false);
   }
-  const handleAddDiary = () => {
-    //console.log(diaryWeatherRef.current.value);
-    //const weather = diaryWeatherRef.current.value;
-    //const manager = diaryManagerRef.current.value;
-  }
-
 
   return (
     <div className="App">
