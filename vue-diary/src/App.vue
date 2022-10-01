@@ -1,15 +1,23 @@
 <script setup lang="ts">
-import {ref} from "vue";
+import { ref } from "vue";
 import DiaryForm from "./components/DiaryForm.vue";
 import DiaryView from "./components/DiaryView.vue";
 
+const isEdit = ref(false);
+const editHandler = (): void => {
+  isEdit.value = true;
+}
+const viewHandler = (): void => {
+  isEdit.value = false;
+}
+
 const diary = ref({
-  weather:"雨",
-    manager:"山田",
-    sleepTime:9,
-    start:"10:00",
-    end:"17:00",
-    comment:"はじめまして。"
+  weather: "雨",
+  manager: "山田",
+  sleepTime: 9,
+  start: "10:00",
+  end: "17:00",
+  comment: "はじめまして。"
 });
 
 </script>
@@ -18,20 +26,14 @@ const diary = ref({
 <template>
   <div class="App">
     <h2>2022年09月22日の日記</h2>
-    <div>
-      <div><button class='btn btn-primary mb-2'>戻る</button></div>
-      <DiaryForm />
-    </div>
-  </div>
-  <div>
-    <div><button class='btn btn-success mb-2'>編集する</button></div>
-    <DiaryView v-bind:diary="diary" />
-  </div>
-
-
-
-  <div class="wrapper">
-    <HelloWorld msg="You did it!" />
+    <template v-if="isEdit == true">
+      <div><button v-on:click="viewHandler" class='btn btn-primary mb-2'>戻る</button></div>
+      <DiaryForm v-bind:diary="diary" />
+    </template>
+    <template v-else="isEdit == false">
+        <div><button v-on:click="editHandler" class='btn btn-success mb-2'>編集する</button></div>
+        <DiaryView v-bind:diary="diary" />
+    </template>
   </div>
 </template>
 
