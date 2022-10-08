@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type { Diary } from './Diary';
+import type {Diary} from "../interfaces";
+
 interface Props {
     diary: Diary;
 }
