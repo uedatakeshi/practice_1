@@ -23,6 +23,7 @@ import { useState } from 'react';
     setIsEdit(false);
   }
 
+  const getDiary = () => {}
 
   return (
     <div className="App">
