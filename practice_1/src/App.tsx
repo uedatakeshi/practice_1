@@ -23,7 +23,11 @@ import { useState } from 'react';
     setIsEdit(false);
   }
 
-  const getDiary = () => {}
+  const getDiary = () => {
+    fetch("https://....")
+    .then(res => res.json())
+    .then(data => console.log(data));
+  }
 
   return (
     <div className="App">
