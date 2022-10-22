@@ -10,6 +10,7 @@ interface diaryProps {
 
 const Form  = (props: diaryProps) => {
 
+    const IdRef = useRef<HTMLInputElement>(document.createElement("input"));
     const WeatherRef = useRef<HTMLSelectElement>(document.createElement("select"));
     const ManagerRef = useRef<HTMLSelectElement>(document.createElement("select"));
     const SleeptimeRef = useRef<HTMLInputElement>(document.createElement("input"));
@@ -20,6 +21,7 @@ const Form  = (props: diaryProps) => {
     const handleAddDiary = () => {
         if (window.confirm("よろしいですか？")) {
             props.setDiaries({ 
+                id: Number(IdRef.current.value),
                 weather: WeatherRef.current.value,
                 manager: ManagerRef.current.value,
                 sleep_time: Number(SleeptimeRef.current.value),
@@ -31,24 +33,27 @@ const Form  = (props: diaryProps) => {
         }
     }
     const weatherOptions = [
-        { value: '晴れ', label: '晴れ' },
-        { value: '曇り', label: '曇り' },
-        { value: '雨', label: '雨' },
+        { id:1, value: '晴れ', label: '晴れ' },
+        { id:2, value: '曇り', label: '曇り' },
+        { id:3, value: '雨', label: '雨' },
     ];
     const managerOptions = [
-        { value: '山田', label: '山田' },
-        { value: '前田', label: '前田' },
-        { value: '高田', label: '高田' },
+        { id:1, value: '山田', label: '山田' },
+        { id:2, value: '前田', label: '前田' },
+        { id:3, value: '高田', label: '高田' },
     ];
 
     return (
         <div>
+                        <input type="hidden" defaultValue={props.diaries.id}
+                            ref={IdRef} name="id" />
+
             <div className="mb-3">
                 <label className="form-label" htmlFor='weather'>天気</label>
                 <div className="row">
                     <div className="col-auto">
                         <select ref={WeatherRef} defaultValue={props.diaries.weather} className="form-control form-select-lg" id="weather" name="weather" >
-                            {weatherOptions.map(d => <option value={d.value}>{d.label}</option>)}
+                            {weatherOptions.map((d, i) => <option  value={d.value}>{d.label}</option>)}
                         </select>
                     </div>
                 </div>
@@ -58,7 +63,7 @@ const Form  = (props: diaryProps) => {
                 <div className="row">
                     <div className="col-auto">
                         <select ref={ManagerRef} defaultValue={props.diaries.manager} className="form-control form-select-lg" id="manager" name="manager">
-                            {managerOptions.map(d => <option value={d.value}>{d.label}</option>)}
+                            {managerOptions.map((d, i) => <option key={i} value={d.value}>{d.label}</option>)}
                         </select>
                     </div>
                 </div>
@@ -93,7 +98,7 @@ const Form  = (props: diaryProps) => {
             </div>
             <div className="mb-3">
                 <label className="form-label" htmlFor="comment">コメント</label>
-                <textarea ref={CommentRef} className="form-control" id="comment" name="comment" >{props.diaries.comment}</textarea>
+                <textarea ref={CommentRef} defaultValue={props.diaries.comment} className="form-control" id="comment" name="comment" ></textarea>
             </div>
             <div className="row">
                 <div className="col-auto">

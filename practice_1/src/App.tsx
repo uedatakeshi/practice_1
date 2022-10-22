@@ -2,18 +2,19 @@ import React from 'react';
 import { Diary } from './Diary';
 import View from './components/View';
 import Form from './components/Form';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-  function App() {
+function App() {
 
   const [isEdit, setIsEdit] = useState(false);
   const [diaries, setDiaries] = useState<Diary>({
-    weather:"晴れ",
-    manager:"山田",
-    sleep_time:9,
-    start:"10:00",
-    end:"17:00",
-    comment:"はじめまして。"
+    id: 0,
+    weather: "",
+    manager: "",
+    sleep_time: 0,
+    start: "",
+    end: "",
+    comment: ""
   });
 
   const editHandler = () => {
@@ -23,11 +24,11 @@ import { useState } from 'react';
     setIsEdit(false);
   }
 
-  const getDiary = () => {
-    fetch("https://....")
-    .then(res => res.json())
-    .then(data => console.log(data));
-  }
+  useEffect(() => {
+    fetch("http://localhost:3004/diaries/1")
+      .then(res => res.json())
+      .then(data => setDiaries(data));
+  }, []);
 
   return (
     <div className="App">
@@ -35,7 +36,7 @@ import { useState } from 'react';
       {isEdit ?
         <div>
           <div><button onClick={viewHandler} className='btn btn-primary mb-2'>戻る</button></div>
-          <Form diaries={diaries} setDiaries={setDiaries}  onStop={viewHandler} />
+          <Form diaries={diaries} setDiaries={setDiaries} onStop={viewHandler} />
 
         </div>
 

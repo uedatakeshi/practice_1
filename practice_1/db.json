@@ -1,0 +1,13 @@
+{
+  "diaries": [
+    {
+      "id": 1,
+      "weather": "晴れ",
+      "manager": "山田",
+      "sleep_time": 22,
+      "start": "10:00",
+      "end": "17:00",
+      "comment": "はじめまして。"
+    }
+  ]
+}

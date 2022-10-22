@@ -3,6 +3,7 @@ import { ref } from "vue";
 import DiaryForm from "./components/DiaryForm.vue";
 import DiaryView from "./components/DiaryView.vue";
 import type {Diary} from "./components/Diary";
+import db from "./firebase";
 
 const isEdit = ref(false);
 const editHandler = (): void => {

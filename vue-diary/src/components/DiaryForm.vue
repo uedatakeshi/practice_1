@@ -30,6 +30,18 @@ const addHandler = (): void => {
     emit("onStop");
 }
 
+const delHandler = (): void => {
+    props.diary.weather = "";
+    props.diary.manager = "";
+    props.diary.sleepTime = 0;
+    props.diary.start = "";
+    props.diary.end = "";
+    props.diary.comment = "";
+
+    emit("onStop");
+}
+
+
 const weatherOptions: { [key: number]: string; } = {
     1: '晴れ',
     2: '曇り',
@@ -97,7 +109,7 @@ const managerOptions: { [key: number]: string; } = {
             <button type="button" v-on:click="addHandler" class="btn btn-primary">登録する</button>
         </div>
         <div class="col-auto">
-            <button type="button" class="btn  btn-outline-secondary">削除する</button>
+            <button type="button" v-on:click="delHandler" class="btn  btn-outline-secondary">削除する</button>
         </div>
     </div>
 
