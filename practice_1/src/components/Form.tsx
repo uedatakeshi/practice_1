@@ -20,7 +20,7 @@ const Form  = (props: diaryProps) => {
 
     const handleAddDiary = () => {
         if (window.confirm("よろしいですか？")) {
-            props.setDiaries({ 
+            const data = { 
                 id: Number(IdRef.current.value),
                 weather: WeatherRef.current.value,
                 manager: ManagerRef.current.value,
@@ -28,7 +28,22 @@ const Form  = (props: diaryProps) => {
                 start: StartRef.current.value,
                 end: EndRef.current.value,
                 comment: CommentRef.current.value,
-            });
+            };
+            props.setDiaries(data);
+
+                // Default options are marked with *
+                const response = fetch("http://127.0.0.1:8000/api/diaries/update/1", {
+                  method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+                  cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                  headers: {
+                    'Content-Type': 'application/json'
+                    // 'Content-Type': 'application/x-www-form-urlencoded',
+                  },
+                  body: JSON.stringify(data) // body data type must match "Content-Type" header
+                });
+                console.log(response); // parses JSON response into native JavaScript objects
+
+
             props.onStop();
         }
     }
@@ -53,7 +68,7 @@ const Form  = (props: diaryProps) => {
                 <div className="row">
                     <div className="col-auto">
                         <select ref={WeatherRef} defaultValue={props.diaries.weather} className="form-control form-select-lg" id="weather" name="weather" >
-                            {weatherOptions.map((d, i) => <option  value={d.value}>{d.label}</option>)}
+                            {weatherOptions.map((d, i) => <option key={i} value={d.value}>{d.label}</option>)}
                         </select>
                     </div>
                 </div>

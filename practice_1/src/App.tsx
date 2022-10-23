@@ -25,7 +25,7 @@ function App() {
   }
 
   useEffect(() => {
-    fetch("http://localhost:3004/diaries/1")
+    fetch("http://127.0.0.1:8000/api/diaries/show/1")
       .then(res => res.json())
       .then(data => setDiaries(data));
   }, []);
