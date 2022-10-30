@@ -10,8 +10,9 @@ interface diaryProps {
 
 const Form  = (props: diaryProps) => {
 
+
     const IdRef = useRef<HTMLInputElement>(document.createElement("input"));
-    const WeatherRef = useRef<HTMLSelectElement>(document.createElement("select"));
+    const WeatherRef = useRef<HTMLSelectElement>(null);
     const ManagerRef = useRef<HTMLSelectElement>(document.createElement("select"));
     const SleeptimeRef = useRef<HTMLInputElement>(document.createElement("input"));
     const StartRef = useRef<HTMLInputElement>(document.createElement("input"));
@@ -22,7 +23,7 @@ const Form  = (props: diaryProps) => {
         if (window.confirm("よろしいですか？")) {
             const data = { 
                 id: Number(IdRef.current.value),
-                weather: WeatherRef.current.value,
+                weather: (WeatherRef.current ? WeatherRef.current.value : ""),
                 manager: ManagerRef.current.value,
                 sleep_time: Number(SleeptimeRef.current.value),
                 start: StartRef.current.value,
