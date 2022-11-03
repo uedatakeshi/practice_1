@@ -5,6 +5,12 @@ import type { Diary } from "./components/Diary";
 const isEdit = ref(false);
 const editHandler = (): void => {
   isEdit.value = true;
+  Weather.value = diary.value.weather;
+  Manager.value = diary.value.manager;
+  SleepTime.value = diary.value.sleep_time;
+  Start.value = diary.value.start;
+  End.value = diary.value.end;
+  Comment.value = diary.value.comment;
 }
 const viewHandler = (): void => {
   isEdit.value = false;
@@ -21,16 +27,15 @@ fetch("http://127.0.0.1:8000/api/diaries/show/1")
   .then(res => res.json())
   .then((data) => {
     diary.value = data;
-    Weather.value = diary.value.weather;
-    Manager.value = diary.value.manager;
-    SleepTime.value = diary.value.sleep_time;
-    Start.value = diary.value.start;
-    End.value = diary.value.end;
-    Comment.value = diary.value.comment;
   })
 
-const addHandler = (): void => {
+const addHandler = (): boolean => {
 
+  if (SleepTime.value == "0") {
+    alert("0以上を入れてください");
+    return false;
+
+  }
   diary.value.sleep_time = SleepTime.value;
   diary.value.weather = Weather.value;
   diary.value.manager = Manager.value;
@@ -39,7 +44,7 @@ const addHandler = (): void => {
   diary.value.comment = Comment.value;
 
   // Default options are marked with *
-  const response = fetch("http://127.0.0.1:8000/api/diaries/update/1", {
+  fetch("http://127.0.0.1:8000/api/diaries/update/1", {
     method: 'PUT', // *GET, POST, PUT, DELETE, etc.
     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
     headers: {
@@ -47,10 +52,24 @@ const addHandler = (): void => {
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: JSON.stringify(diary.value) // body data type must match "Content-Type" header
-  });
-  console.log(response)
+  })
+    .then((response) => {
+      //console.log(response.status);
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("データの保存でエラーが発生しました。 " + response.status + " " + response.statusText)
+      }
+    })
+    .then((data) => {
+      alert(data.message);
+    }).catch((err) => {
+      alert(err.message);
+    });
 
   viewHandler();
+
+  return true;
 }
 
 const delHandler = (): void => {
