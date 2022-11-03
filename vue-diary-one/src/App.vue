@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onBeforeMount } from "vue";
+import { ref } from "vue";
 import type { Diary } from "./components/Diary";
 
 const isEdit = ref(false);
@@ -9,37 +9,57 @@ const editHandler = (): void => {
 const viewHandler = (): void => {
   isEdit.value = false;
 }
-const diary:any = ref([]);
+const diary: any = ref({});
+const Weather = ref('');
+const Manager = ref('');
+const SleepTime = ref('0');
+const Start = ref('');
+const End = ref('');
+const Comment = ref('');
+
 fetch("http://127.0.0.1:8000/api/diaries/show/1")
   .then(res => res.json())
-  .then((data) => (diary.value = data));
+  .then((data) => {
+    diary.value = data;
+    Weather.value = diary.value.weather;
+    Manager.value = diary.value.manager;
+    SleepTime.value = diary.value.sleep_time;
+    Start.value = diary.value.start;
+    End.value = diary.value.end;
+    Comment.value = diary.value.comment;
+  })
 
-const Weather = ref(diary.weather);
-const Manager = ref(diary.manager);
-const SleepTime = ref(diary.sleepTime);
-const Start = ref(diary.start);
-const End = ref(diary.end);
-const Comment = ref(diary.comment);
-
-console.log(diary);
 const addHandler = (): void => {
-  diary.weather = Weather.value;
-  diary.manager = Manager.value;
-  diary.sleepTime = SleepTime.value;
-  diary.start = Start.value;
-  diary.end = End.value;
-  diary.comment = Comment.value;
+
+  diary.value.sleep_time = SleepTime.value;
+  diary.value.weather = Weather.value;
+  diary.value.manager = Manager.value;
+  diary.value.start = Start.value;
+  diary.value.end = End.value;
+  diary.value.comment = Comment.value;
+
+  // Default options are marked with *
+  const response = fetch("http://127.0.0.1:8000/api/diaries/update/1", {
+    method: 'PUT', // *GET, POST, PUT, DELETE, etc.
+    cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+    headers: {
+      'Content-Type': 'application/json'
+      // 'Content-Type': 'application/x-www-form-urlencoded',
+    },
+    body: JSON.stringify(diary.value) // body data type must match "Content-Type" header
+  });
+  console.log(response)
 
   viewHandler();
 }
 
 const delHandler = (): void => {
-  diary.weather = "";
-  diary.manager = "";
-  diary.sleepTime = 0;
-  diary.start = "";
-  diary.end = "";
-  diary.comment = "";
+  diary.value.weather = "";
+  diary.value.manager = "";
+  diary.value.sleepTime = 0;
+  diary.value.start = "";
+  diary.value.end = "";
+  diary.value.comment = "";
 
   viewHandler();
 }
@@ -132,15 +152,15 @@ const managerOptions: { [key: number]: string; } = {
       </div>
       <div class="mb-3">
         <label class="form-label">睡眠時間</label>
-        <p class="h3 bg-light p-3">{{ diary.sleepTime }}時間</p>
+        <p class="h3 bg-light p-3">{{ diary.sleep_time }}時間</p>
       </div>
       <div class="mb-3">
         <label class="form-label">出社時間</label>
         <p class="h3 bg-light p-3">{{ diary.start }}～{{ diary.end }}</p>
       </div>
       <div class="mb-3">
-        <label class="form-label">{{ diary.comment }}</label>
-        <p class="h3 bg-light p-3"></p>
+        <label class="form-label">コメント</label>
+        <p class="h3 bg-light p-3">{{ diary.comment }}</p>
       </div>
     </template>
   </div>
