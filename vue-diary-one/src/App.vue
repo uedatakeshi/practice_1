@@ -1,47 +1,61 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, reactive } from "vue";
 import type { Diary } from "./components/Diary";
 
 const isEdit = ref(false);
-const editHandler = (): void => {
-  isEdit.value = true;
-  Weather.value = diary.value.weather;
-  Manager.value = diary.value.manager;
-  SleepTime.value = diary.value.sleep_time;
-  Start.value = diary.value.start;
-  End.value = diary.value.end;
-  Comment.value = diary.value.comment;
-}
-const viewHandler = (): void => {
-  isEdit.value = false;
-}
-const diary: any = ref({});
-const Weather = ref('');
-const Manager = ref('');
-const SleepTime = ref('0');
-const Start = ref('');
-const End = ref('');
-const Comment = ref('');
+const diary: Diary = reactive({
+  weather: "",
+  manager: "",
+  sleep_time: 0,
+  start: "",
+  end: "",
+  comment: ""
+});
 
 fetch("http://127.0.0.1:8000/api/diaries/show/1")
   .then(res => res.json())
   .then((data) => {
-    diary.value = data;
-  })
+    diary.weather = data.weather;
+    diary.manager = data.manager;
+    diary.sleep_time = data.sleep_time;
+    diary.start = data.start;
+    diary.end = data.end;
+    diary.comment = data.comment;
+    console.log(diary);
+  });
 
+const Weather = ref('');
+const Manager = ref('');
+const SleepTime = ref(0);
+const Start = ref('');
+const End = ref('');
+const Comment = ref('');
+
+const editHandler = (): void => {
+  isEdit.value = true;
+  Weather.value = diary.weather;
+  Manager.value = diary.manager;
+  SleepTime.value = diary.sleep_time;
+  Start.value = diary.start;
+  End.value = diary.end;
+  Comment.value = diary.comment;
+}
+const viewHandler = (): void => {
+  isEdit.value = false;
+}
 const addHandler = (): boolean => {
 
-  if (SleepTime.value == "0") {
+  if (SleepTime.value == 0) {
     alert("0以上を入れてください");
     return false;
 
   }
-  diary.value.sleep_time = SleepTime.value;
-  diary.value.weather = Weather.value;
-  diary.value.manager = Manager.value;
-  diary.value.start = Start.value;
-  diary.value.end = End.value;
-  diary.value.comment = Comment.value;
+  diary.sleep_time = SleepTime.value;
+  diary.weather = Weather.value;
+  diary.manager = Manager.value;
+  diary.start = Start.value;
+  diary.end = End.value;
+  diary.comment = Comment.value;
 
   // Default options are marked with *
   fetch("http://127.0.0.1:8000/api/diaries/update/1", {
@@ -51,7 +65,7 @@ const addHandler = (): boolean => {
       'Content-Type': 'application/json'
       // 'Content-Type': 'application/x-www-form-urlencoded',
     },
-    body: JSON.stringify(diary.value) // body data type must match "Content-Type" header
+    body: JSON.stringify(diary) // body data type must match "Content-Type" header
   })
     .then((response) => {
       //console.log(response.status);
@@ -73,12 +87,12 @@ const addHandler = (): boolean => {
 }
 
 const delHandler = (): void => {
-  diary.value.weather = "";
-  diary.value.manager = "";
-  diary.value.sleepTime = 0;
-  diary.value.start = "";
-  diary.value.end = "";
-  diary.value.comment = "";
+  diary.weather = "";
+  diary.manager = "";
+  diary.sleep_time = 0;
+  diary.start = "";
+  diary.end = "";
+  diary.comment = "";
 
   viewHandler();
 }

@@ -1,7 +1,7 @@
 export type Diary = {
     weather: string; 
     manager: string;
-    sleepTime: number;
+    sleep_time: number;
     start: string;
     end: string; 
     comment: string;
